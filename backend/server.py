@@ -73,6 +73,53 @@ async def get_status_checks():
     
     return status_checks
 
+@api_router.post("/contact")
+async def contact_form(form_data: ContactForm):
+    """
+    Contact form endpoint - stores message in database
+    
+    Note: To enable email sending, you need to configure an email service:
+    - Option 1: Add SMTP credentials to .env (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD)
+    - Option 2: Use SendGrid API (add SENDGRID_API_KEY to .env)
+    - Option 3: Use AWS SES (configure AWS credentials)
+    
+    For now, messages are stored in MongoDB.
+    """
+    try:
+        # Store contact message in database
+        contact_doc = {
+            "id": str(uuid.uuid4()),
+            "name": form_data.name,
+            "email": form_data.email,
+            "phone": form_data.phone,
+            "address": form_data.address,
+            "comment": form_data.comment,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "status": "new"
+        }
+        
+        await db.contact_messages.insert_one(contact_doc)
+        
+        logger.info(f"New contact message from {form_data.name} ({form_data.email})")
+        
+        # TODO: Implement email sending here when email service is configured
+        # Example with SMTP:
+        # import smtplib
+        # from email.mime.text import MIMEText
+        # send_email(to="nehal@masfiqurnehal.com", subject=f"Contact from {form_data.name}", body=form_data.comment)
+        
+        return {
+            "success": True,
+            "message": "Thank you for your message! I will get back to you soon.",
+            "id": contact_doc["id"]
+        }
+    except Exception as e:
+        logger.error(f"Error processing contact form: {str(e)}")
+        return {
+            "success": False,
+            "message": "Failed to send message. Please try again or email directly."
+        }
+
 # Include the router in the main app
 app.include_router(api_router)
 
