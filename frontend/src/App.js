@@ -17,6 +17,7 @@ function App() {
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [displayedName, setDisplayedName] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId) => {
@@ -24,6 +25,7 @@ function App() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
+      setIsMobileMenuOpen(false); // Close mobile menu after navigation
     }
   };
 
@@ -292,6 +294,8 @@ function App() {
             >
               Md. Masfiqur Rahman Nehal
             </button>
+            
+            {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
               {['home', 'projects', 'skills', 'education', 'research', 'about', 'contact'].map(section => (
                 <button
@@ -308,7 +312,45 @@ function App() {
                 </button>
               ))}
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-gray-300 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded p-2"
+              data-testid="mobile-menu-button"
+              aria-label="Toggle menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden py-4 border-t border-gray-800 animate-fadeIn">
+              <div className="flex flex-col space-y-3">
+                {['home', 'projects', 'skills', 'education', 'research', 'about', 'contact'].map(section => (
+                  <button
+                    key={section}
+                    onClick={() => scrollToSection(section)}
+                    className={`capitalize transition-all font-medium text-left px-4 py-2 rounded-lg ${
+                      activeSection === section 
+                        ? 'text-cyan-400 bg-cyan-500/10' 
+                        : 'text-gray-300 hover:text-cyan-400 hover:bg-gray-800'
+                    }`}
+                    data-testid={`mobile-nav-${section}`}
+                  >
+                    {section}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -323,16 +365,6 @@ function App() {
           
           {/* Tech grid pattern */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent"></div>
-          
-          {/* Floating particles */}
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '2.5s'}}></div>
-          
-          {/* Scanning line effect */}
-          <div className="absolute inset-0">
-            <div className="absolute w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent top-1/4 animate-scan"></div>
-          </div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -348,11 +380,12 @@ function App() {
                   <span className="animate-pulse">|</span>
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light" data-testid="hero-title">
+              <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light leading-relaxed" data-testid="hero-title">
                 <span className="text-cyan-400 font-semibold">Software Engineer</span> | 
                 <span className="text-blue-400 font-semibold"> Frontend (React)</span> | 
-                <span className="text-purple-400 font-semibold"> Web Development</span> | 
-                <span className="text-pink-400 font-semibold"> AI / ML Enthusiast</span>
+                <span className="text-purple-400 font-semibold"> Web Development</span>
+                <br />
+                <span className="text-pink-400 font-semibold">AI / ML Enthusiast</span>
               </p>
               <p className="text-lg text-gray-400 leading-relaxed mb-10 max-w-3xl" data-testid="hero-description">
                 I build <span className="text-white font-semibold">modern, responsive interfaces</span> using React-style component patterns, with a strong focus on <span className="text-cyan-400">clean UI</span>, <span className="text-blue-400">performance</span>, <span className="text-purple-400">accessibility</span>, and scalable frontend architecture. Ready for <span className="text-white font-semibold">corporate, multinational, fintech, and startup roles</span>.
