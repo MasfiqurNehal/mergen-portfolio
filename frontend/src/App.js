@@ -16,6 +16,7 @@ function App() {
   });
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [displayedName, setDisplayedName] = useState('');
 
   // Smooth scroll to section
   const scrollToSection = (sectionId) => {
@@ -25,6 +26,54 @@ function App() {
       setActiveSection(sectionId);
     }
   };
+
+  // Typewriter effect for name
+  useEffect(() => {
+    const fullName = "Md. Masfiqur Rahman Nehal";
+    const shortName = "Md. ";
+    let currentIndex = 0;
+    let isDeleting = false;
+    let hasTypedOnce = false;
+    let timeoutId;
+
+    const type = () => {
+      if (!hasTypedOnce) {
+        // First typing: type full name
+        if (currentIndex < fullName.length) {
+          setDisplayedName(fullName.substring(0, currentIndex + 1));
+          currentIndex++;
+          timeoutId = setTimeout(type, 100);
+        } else {
+          // Wait, then start deleting
+          hasTypedOnce = true;
+          isDeleting = true;
+          timeoutId = setTimeout(type, 2000);
+        }
+      } else if (isDeleting) {
+        // Delete back to "Md. "
+        if (currentIndex > shortName.length) {
+          currentIndex--;
+          setDisplayedName(fullName.substring(0, currentIndex));
+          timeoutId = setTimeout(type, 50);
+        } else {
+          // Start typing again
+          isDeleting = false;
+          timeoutId = setTimeout(type, 500);
+        }
+      } else {
+        // Second typing: type full name again
+        if (currentIndex < fullName.length) {
+          setDisplayedName(fullName.substring(0, currentIndex + 1));
+          currentIndex++;
+          timeoutId = setTimeout(type, 100);
+        }
+        // Stay at full name (animation complete)
+      }
+    };
+
+    timeoutId = setTimeout(type, 500);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // Handle scroll spy for navigation
   useEffect(() => {
@@ -208,9 +257,15 @@ function App() {
 
   const research = [
     {
-      title: "Gender Classification from Bengali Text",
+      title: "Gender Classification from Bengali Text using Deep Learning Techniques",
       type: "AI/NLP Research",
-      platform: "ResearchGate"
+      platform: "ResearchGate",
+      link: "https://www.researchgate.net/publication/393884159_Gender_Classification_from_Bengali_Text_using_Deep_Learning_Techniques"
+    },
+    {
+      title: "Retinal Disease Detection using Deep Learning Techniques",
+      type: "AI/ML Project",
+      platform: "Research Project"
     },
     {
       title: "API Documentation Q&A Agent",
