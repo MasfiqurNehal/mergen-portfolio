@@ -154,12 +154,12 @@ function App() {
   ];
 
   const techStack = [
-    { name: "React", color: "bg-blue-500" },
-    { name: "JavaScript", color: "bg-yellow-500" },
-    { name: "Tailwind CSS", color: "bg-cyan-500" },
-    { name: "HTML & CSS", color: "bg-orange-500" },
-    { name: "TensorFlow", color: "bg-orange-600" },
-    { name: "MySQL", color: "bg-blue-600" }
+    { name: "React", color: "from-blue-500 to-blue-600" },
+    { name: "JavaScript", color: "from-yellow-400 to-yellow-500" },
+    { name: "Tailwind CSS", color: "from-cyan-400 to-cyan-500" },
+    { name: "HTML & CSS", color: "from-orange-400 to-orange-500" },
+    { name: "TensorFlow", color: "from-orange-500 to-red-500" },
+    { name: "MySQL", color: "from-blue-500 to-indigo-600" }
   ];
 
   const skills = {
@@ -225,14 +225,14 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
+      <nav className="fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-gray-800 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
+              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-cyan-300 transition-all"
               data-testid="nav-logo"
             >
               Nehal
@@ -242,10 +242,10 @@ function App() {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`capitalize transition-colors ${
+                  className={`capitalize transition-all font-medium ${
                     activeSection === section 
-                      ? 'text-blue-600 font-semibold' 
-                      : 'text-gray-600 hover:text-blue-600'
+                      ? 'text-cyan-400' 
+                      : 'text-gray-300 hover:text-cyan-400'
                   }`}
                   data-testid={`nav-${section}`}
                 >
@@ -258,34 +258,50 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <header id="home" className="pt-16 bg-gradient-to-br from-blue-50 via-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1 text-center md:text-left">
-              <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium mb-6" data-testid="availability-badge">
-                <span className="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></span>
+      <header id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
+          <div className="absolute w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -bottom-48 -right-48 animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/50 text-green-400 rounded-full text-sm font-medium mb-8" data-testid="availability-badge">
+                <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
                 Available for Work
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4" data-testid="hero-name">
-                Md. Masfiqur Rahman Nehal
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight" data-testid="hero-name">
+                <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent">
+                  Md. Masfiqur Rahman Nehal
+                </span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 mb-6" data-testid="hero-title">
-                Software Engineer | Frontend (React) | Web Development | AI / ML Enthusiast
+              <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light" data-testid="hero-title">
+                <span className="text-cyan-400 font-semibold">Software Engineer</span> | 
+                <span className="text-blue-400 font-semibold"> Frontend (React)</span> | 
+                <span className="text-purple-400 font-semibold"> Web Development</span> | 
+                <span className="text-pink-400 font-semibold"> AI / ML Enthusiast</span>
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-8 max-w-3xl" data-testid="hero-description">
-                I build modern, responsive interfaces using React-style component patterns, with a strong focus on clean UI, performance, accessibility, and scalable frontend architecture. My work centers on frontend development (React) alongside applied AI/ML projects. I'm ready for corporate, multinational, fintech, and software engineering roles.
+              <p className="text-lg text-gray-400 leading-relaxed mb-10 max-w-3xl" data-testid="hero-description">
+                I build <span className="text-white font-semibold">modern, responsive interfaces</span> using React-style component patterns, with a strong focus on <span className="text-cyan-400">clean UI</span>, <span className="text-blue-400">performance</span>, <span className="text-purple-400">accessibility</span>, and scalable frontend architecture. Ready for <span className="text-white font-semibold">corporate, multinational, fintech, and startup roles</span>.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button 
                   onClick={() => scrollToSection('projects')}
-                  className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+                  className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transform"
                   data-testid="cta-projects"
                 >
-                  Featured Projects
+                  <span className="flex items-center justify-center gap-2">
+                    Featured Projects
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
                 </button>
                 <button 
                   onClick={() => scrollToSection('contact')}
-                  className="px-8 py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                  className="px-8 py-4 bg-white/10 text-white border-2 border-white/30 backdrop-blur-sm rounded-lg font-semibold hover:bg-white/20 hover:border-white/50 transition-all"
                   data-testid="cta-contact"
                 >
                   Contact Me
@@ -293,23 +309,26 @@ function App() {
               </div>
             </div>
             <div className="flex-shrink-0">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_hii-hello-62/artifacts/3h91qb9z_profile.png" 
-                alt="Md. Masfiqur Rahman Nehal - Software Engineer"
-                className="w-64 h-64 md:w-80 md:h-80 rounded-2xl shadow-2xl object-cover"
-                data-testid="profile-image"
-              />
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl blur-2xl opacity-30 animate-pulse"></div>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_hii-hello-62/artifacts/3h91qb9z_profile.png" 
+                  alt="Md. Masfiqur Rahman Nehal - Software Engineer"
+                  className="relative w-72 h-72 md:w-96 md:h-96 rounded-2xl shadow-2xl object-cover border-4 border-white/10"
+                  data-testid="profile-image"
+                />
+              </div>
             </div>
           </div>
 
           {/* Tech Stack Badges */}
-          <div className="mt-16" data-testid="tech-stack-section">
-            <p className="text-center text-gray-600 mb-6 font-medium">Technology Stack</p>
-            <div className="flex flex-wrap justify-center gap-3">
+          <div className="mt-20" data-testid="tech-stack-section">
+            <p className="text-center text-gray-400 mb-8 font-medium text-lg">Core Technology Stack</p>
+            <div className="flex flex-wrap justify-center gap-4">
               {techStack.map((tech, index) => (
                 <span 
                   key={index}
-                  className={`px-6 py-2 ${tech.color} text-white rounded-full font-medium shadow-md hover:shadow-lg transition-shadow`}
+                  className={`px-6 py-3 bg-gradient-to-r ${tech.color} text-white rounded-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all`}
                   data-testid={`tech-badge-${tech.name.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   {tech.name}
@@ -321,40 +340,47 @@ function App() {
       </header>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white">
+      <section id="projects" className="py-24 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" data-testid="projects-heading">
-            Featured Projects
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            A collection of my recent work showcasing frontend development expertise and problem-solving skills
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent" data-testid="projects-heading">
+              Featured Projects
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              A collection of my recent work showcasing frontend development expertise and problem-solving skills
+            </p>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <article 
                 key={index}
-                className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl transition-shadow duration-300"
+                className="group bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-xl p-6 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 hover:scale-105 transform"
                 data-testid={`project-card-${index}`}
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-2" data-testid={`project-title-${index}`}>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors" data-testid={`project-title-${index}`}>
                   {project.title}
                 </h3>
-                <p className="text-sm text-blue-600 font-medium mb-3">{project.subtitle}</p>
-                <p className="text-gray-700 mb-4 leading-relaxed">{project.description}</p>
+                <p className="text-sm text-cyan-400 font-medium mb-4">{project.subtitle}</p>
+                <p className="text-gray-400 mb-6 leading-relaxed">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((t, i) => (
-                    <span key={i} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    <span key={i} className="px-3 py-1 bg-white/5 text-gray-300 rounded-full text-sm border border-white/10">
                       {t}
                     </span>
                   ))}
                 </div>
-                <p className="text-sm text-green-700 font-medium mb-4">✓ {project.impact}</p>
+                <p className="text-sm text-green-400 font-medium mb-6 flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  {project.impact}
+                </p>
                 <div className="flex gap-3">
                   <a 
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-center font-medium hover:bg-blue-700 transition-colors"
+                    className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-center font-medium hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg"
                     data-testid={`project-live-${index}`}
                   >
                     Live Demo
@@ -363,7 +389,7 @@ function App() {
                     href={project.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 px-4 py-2 bg-gray-800 text-white rounded-lg text-center font-medium hover:bg-gray-900 transition-colors"
+                    className="flex-1 px-4 py-3 bg-white/10 text-white rounded-lg text-center font-medium hover:bg-white/20 transition-all border border-white/20"
                     data-testid={`project-source-${index}`}
                   >
                     Source Code
@@ -376,72 +402,79 @@ function App() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-gray-50">
+      <section id="skills" className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" data-testid="skills-heading">
-            Technical Skills
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Comprehensive skill set spanning frontend development, AI/ML, and software engineering
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" data-testid="skills-heading">
+              Technical Skills
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Comprehensive skill set spanning frontend development, AI/ML, and software engineering
+            </p>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Object.entries(skills).map(([category, skillList], index) => (
               <div 
                 key={index}
-                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
+                className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all border border-gray-700 hover:border-purple-500/50"
                 data-testid={`skill-category-${index}`}
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-blue-600">
+                <h3 className="text-xl font-bold text-white mb-4 pb-3 border-b-2 border-purple-500">
                   {category}
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {skillList.map((skill, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
-                      <span className="text-gray-700">{skill}</span>
+                      <span className="text-cyan-400 mr-3 mt-1">▹</span>
+                      <span className="text-gray-300">{skill}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-          <div className="mt-8 bg-blue-50 rounded-xl p-6 border border-blue-100">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Languages</h3>
-            <p className="text-gray-700">Bengali (Native) • English (Professional)</p>
+          <div className="mt-10 bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl p-8 border border-blue-500/30">
+            <h3 className="text-xl font-bold text-white mb-3">Languages</h3>
+            <p className="text-gray-300 text-lg"><span className="text-cyan-400 font-semibold">Bengali</span> (Native) • <span className="text-blue-400 font-semibold">English</span> (Professional)</p>
           </div>
         </div>
       </section>
 
       {/* Education Section */}
-      <section id="education" className="py-20 bg-white">
+      <section id="education" className="py-24 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" data-testid="education-heading">
-            Education
-          </h2>
-          <p className="text-gray-600 text-center mb-12">Academic background and achievements</p>
-          <div className="max-w-4xl mx-auto space-y-6">
-            <article className="bg-gradient-to-r from-blue-50 to-white rounded-xl p-8 shadow-md border border-blue-100" data-testid="education-bsc">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent" data-testid="education-heading">
+              Education
+            </h2>
+            <p className="text-gray-400 text-lg">Academic background and achievements</p>
+          </div>
+          <div className="max-w-4xl mx-auto space-y-8">
+            <article className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-2xl p-10 shadow-xl border border-blue-500/30 hover:border-blue-400/50 transition-all" data-testid="education-bsc">
               <div className="flex items-start justify-between flex-wrap gap-4">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Bachelor of Science (B.Sc) in Computer Science & Engineering
+                  <h3 className="text-3xl font-bold text-white mb-4">
+                    Bachelor of Science in Computer Science & Engineering (CSE)
                   </h3>
-                  <p className="text-lg text-blue-600 font-semibold mb-2">Daffodil International University</p>
-                  <p className="text-gray-700 mb-1"><strong>CGPA:</strong> 3.65 / 4.00</p>
-                  <p className="text-gray-600">Duration: 2022 – 2026</p>
+                  <a 
+                    href="https://daffodilvarsity.edu.bd/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-2xl text-cyan-400 hover:text-cyan-300 font-semibold mb-4 inline-block hover:underline transition-colors"
+                  >
+                    Daffodil International University
+                  </a>
                 </div>
               </div>
             </article>
-            <div className="grid md:grid-cols-2 gap-6">
-              <article className="bg-white rounded-xl p-6 shadow-md border border-gray-200" data-testid="education-hsc">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Higher Secondary Certificate (HSC)</h3>
-                <p className="text-gray-700 mb-1"><strong>Group:</strong> Science</p>
-                <p className="text-green-700 font-semibold">GPA: 5.00 / 5.00</p>
+            <div className="grid md:grid-cols-2 gap-8">
+              <article className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 shadow-lg border border-gray-700 hover:border-green-500/50 transition-all" data-testid="education-hsc">
+                <h3 className="text-2xl font-bold text-white mb-3">Higher Secondary Certificate (HSC)</h3>
+                <p className="text-gray-300 text-lg mb-2"><strong className="text-cyan-400">Group:</strong> Science</p>
               </article>
-              <article className="bg-white rounded-xl p-6 shadow-md border border-gray-200" data-testid="education-ssc">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Secondary School Certificate (SSC)</h3>
-                <p className="text-gray-700 mb-1"><strong>Group:</strong> Science</p>
-                <p className="text-green-700 font-semibold">GPA: 5.00 / 5.00</p>
+              <article className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 shadow-lg border border-gray-700 hover:border-green-500/50 transition-all" data-testid="education-ssc">
+                <h3 className="text-2xl font-bold text-white mb-3">Secondary School Certificate (SSC)</h3>
+                <p className="text-gray-300 text-lg mb-2"><strong className="text-cyan-400">Group:</strong> Science</p>
               </article>
             </div>
           </div>
@@ -449,27 +482,29 @@ function App() {
       </section>
 
       {/* Research Section */}
-      <section id="research" className="py-20 bg-gray-50">
+      <section id="research" className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" data-testid="research-heading">
-            Research & AI Projects
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Applied AI/ML research and development projects
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent" data-testid="research-heading">
+              Research & AI Projects
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Applied AI/ML research and development projects
+            </p>
+          </div>
           <div className="max-w-4xl mx-auto space-y-6">
             {research.map((item, index) => (
               <article 
                 key={index}
-                className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+                className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-8 shadow-lg border border-purple-500/30 hover:border-purple-400/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all"
                 data-testid={`research-item-${index}`}
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
                 <div className="flex items-center gap-4 text-sm">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-medium">
+                  <span className="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full font-medium border border-purple-500/30">
                     {item.type}
                   </span>
-                  <span className="text-gray-600">{item.platform}</span>
+                  <span className="text-gray-400">{item.platform}</span>
                 </div>
               </article>
             ))}
@@ -478,44 +513,109 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section id="about" className="py-24 bg-gray-900/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" data-testid="about-heading">
-            About Me
-          </h2>
-          <div className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-xl p-8 shadow-md">
-            <p className="text-lg text-gray-800 leading-relaxed mb-4">
-              I am a final-year Computer Science & Engineering undergraduate at <strong>Daffodil International University</strong> with a strong passion for <strong>frontend development</strong> using <strong>React</strong>. My expertise lies in building modern, responsive, and user-centric web applications with clean code and scalable architecture.
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent" data-testid="about-heading">
+              About Me
+            </h2>
+          </div>
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-10 shadow-2xl border border-gray-700">
+            <p className="text-lg text-gray-300 leading-relaxed mb-6">
+              I am a final-year <strong className="text-white">Computer Science & Engineering undergraduate</strong> at <strong className="text-cyan-400">Daffodil International University</strong> with a strong passion for <strong className="text-blue-400">frontend development</strong> using <strong className="text-cyan-400">React</strong>. My expertise lies in building modern, responsive, and user-centric web applications with clean code and scalable architecture.
             </p>
-            <p className="text-lg text-gray-800 leading-relaxed mb-4">
-              Beyond frontend development, I have a growing proficiency in <strong>full-stack development</strong> and <strong>AI/ML technologies</strong>, including machine learning, deep learning, and natural language processing. I actively work on applied AI projects and research, particularly in areas like NLP and computer vision.
+            <p className="text-lg text-gray-300 leading-relaxed mb-6">
+              Beyond frontend development, I have a growing proficiency in <strong className="text-purple-400">full-stack development</strong> and <strong className="text-pink-400">AI/ML technologies</strong>, including machine learning, deep learning, and natural language processing. I actively work on applied AI projects and research, particularly in areas like NLP and computer vision.
             </p>
-            <p className="text-lg text-gray-800 leading-relaxed mb-4">
-              I maintain a <strong>clean code mindset</strong> and prioritize <strong>performance</strong>, <strong>accessibility</strong>, and <strong>user experience</strong> in every project. My work reflects a balance between aesthetic design and functional engineering.
+            <p className="text-lg text-gray-300 leading-relaxed mb-6">
+              I maintain a <strong className="text-green-400">clean code mindset</strong> and prioritize <strong className="text-blue-400">performance</strong>, <strong className="text-purple-400">accessibility</strong>, and <strong className="text-cyan-400">user experience</strong> in every project. My work reflects a balance between aesthetic design and functional engineering.
             </p>
-            <p className="text-lg text-gray-800 leading-relaxed">
-              I am ready to contribute to professional software engineering teams in <strong>corporate</strong>, <strong>multinational</strong>, <strong>fintech</strong>, and <strong>startup environments</strong>, bringing dedication, problem-solving skills, and a collaborative mindset.
+            <p className="text-lg text-gray-300 leading-relaxed">
+              I am ready to contribute to professional software engineering teams in <strong className="text-white">corporate</strong>, <strong className="text-white">multinational</strong>, <strong className="text-white">fintech</strong>, and <strong className="text-white">startup environments</strong>, bringing dedication, problem-solving skills, and a collaborative mindset.
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
+      <section id="contact" className="py-24 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" data-testid="contact-heading">
-            Get In Touch
-          </h2>
-          <p className="text-gray-600 text-center mb-12">
-            I'm available for professional opportunities. Feel free to reach out!
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent" data-testid="contact-heading">
+              Get In Touch
+            </h2>
+            <p className="text-gray-400 text-lg">
+              I'm available for professional opportunities. Feel free to reach out!
+            </p>
+          </div>
+
+          {/* Direct Contact Options First */}
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-10 shadow-2xl mb-10 border border-cyan-500/30">
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">Direct Contact</h3>
+            
+            {/* Email visible */}
+            <div className="text-center mb-8">
+              <p className="text-gray-400 mb-3">Email:</p>
+              <a 
+                href="mailto:masfiqur.nehal509@gmail.com"
+                className="text-2xl text-cyan-400 hover:text-cyan-300 font-semibold hover:underline transition-colors"
+              >
+                masfiqur.nehal509@gmail.com
+              </a>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              {/* LinkedIn First */}
+              <a 
+                href="https://www.linkedin.com/in/masfiqur-nehal/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg hover:shadow-blue-500/50 hover:scale-105 transform w-full sm:w-auto justify-center"
+                data-testid="contact-linkedin-button"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                LinkedIn
+              </a>
+              {/* GitHub Second */}
+              <a 
+                href="https://github.com/MasfiqurNehal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg font-semibold hover:from-gray-600 hover:to-gray-700 transition-all shadow-lg hover:scale-105 transform w-full sm:w-auto justify-center"
+                data-testid="contact-github-button"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                </svg>
+                GitHub
+              </a>
+              {/* Email Third */}
+              <a 
+                href="mailto:masfiqur.nehal509@gmail.com"
+                className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg font-semibold hover:from-cyan-500 hover:to-blue-500 transition-all shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transform w-full sm:w-auto justify-center"
+                data-testid="contact-email-button"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                Send Email
+              </a>
+            </div>
+            <p className="text-center text-gray-400 mt-8 text-sm">
+              CV available upon request via email
+            </p>
+          </div>
 
           {/* Contact Form */}
-          <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-10 shadow-2xl border border-gray-700">
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">Send a Message</h3>
             <form onSubmit={handleSubmit} data-testid="contact-form">
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
                     Full Name *
                   </label>
                   <input
@@ -525,13 +625,13 @@ function App() {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
                     placeholder="Your name"
                     data-testid="contact-name-input"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
                     Email Address *
                   </label>
                   <input
@@ -541,7 +641,7 @@ function App() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
                     placeholder="your.email@example.com"
                     data-testid="contact-email-input"
                   />
@@ -549,7 +649,7 @@ function App() {
               </div>
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-300 mb-2">
                     Phone Number
                   </label>
                   <input
@@ -558,13 +658,13 @@ function App() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
                     placeholder="+880 1234567890"
                     data-testid="contact-phone-input"
                   />
                 </div>
                 <div>
-                  <label htmlFor="address" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="address" className="block text-sm font-semibold text-gray-300 mb-2">
                     Location/Address
                   </label>
                   <input
@@ -573,14 +673,14 @@ function App() {
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
                     placeholder="City, Country"
                     data-testid="contact-address-input"
                   />
                 </div>
               </div>
               <div className="mb-6">
-                <label htmlFor="comment" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="comment" className="block text-sm font-semibold text-gray-300 mb-2">
                   Message *
                 </label>
                 <textarea
@@ -590,7 +690,7 @@ function App() {
                   onChange={handleInputChange}
                   required
                   rows="6"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent resize-none transition-all"
                   placeholder="Your message or inquiry..."
                   data-testid="contact-comment-input"
                 ></textarea>
@@ -598,10 +698,10 @@ function App() {
 
               {formStatus.message && (
                 <div 
-                  className={`mb-6 p-4 rounded-lg ${
+                  className={`mb-6 p-4 rounded-lg border ${
                     formStatus.type === 'success' 
-                      ? 'bg-green-50 text-green-800 border border-green-200' 
-                      : 'bg-red-50 text-red-800 border border-red-200'
+                      ? 'bg-green-900/30 text-green-400 border-green-500/50' 
+                      : 'bg-red-900/30 text-red-400 border-red-500/50'
                   }`}
                   data-testid="contact-form-status"
                 >
@@ -612,103 +712,58 @@ function App() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-blue-500 hover:to-cyan-500 transition-all disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transform"
                 data-testid="contact-submit-button"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
-
-          {/* Direct Contact Options */}
-          <div className="bg-white rounded-xl p-8 shadow-lg">
-            <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Direct Contact</h3>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <a 
-                href="mailto:masfiqur.nehal509@gmail.com"
-                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                data-testid="contact-email-button"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-                Send Email
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/masfiqur-nehal/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-blue-700 text-white rounded-lg font-medium hover:bg-blue-800 transition-colors"
-                data-testid="contact-linkedin-button"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-                LinkedIn
-              </a>
-              <a 
-                href="https://github.com/MasfiqurNehal"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg font-medium hover:bg-gray-900 transition-colors"
-                data-testid="contact-github-button"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                </svg>
-                GitHub
-              </a>
-            </div>
-            <p className="text-center text-gray-600 mt-6 text-sm">
-              CV available upon request via email
-            </p>
-          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-black border-t border-gray-800 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">Md. Masfiqur Rahman Nehal</h3>
+              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Md. Masfiqur Rahman Nehal</h3>
               <p className="text-gray-400">Software Engineer | Frontend Developer (React)</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <h4 className="font-semibold mb-4 text-white">Quick Links</h4>
               <ul className="space-y-2">
                 <li>
-                  <button onClick={() => scrollToSection('projects')} className="text-gray-400 hover:text-white transition-colors">
+                  <button onClick={() => scrollToSection('projects')} className="text-gray-400 hover:text-cyan-400 transition-colors">
                     Projects
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection('skills')} className="text-gray-400 hover:text-white transition-colors">
+                  <button onClick={() => scrollToSection('skills')} className="text-gray-400 hover:text-cyan-400 transition-colors">
                     Skills
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection('education')} className="text-gray-400 hover:text-white transition-colors">
+                  <button onClick={() => scrollToSection('education')} className="text-gray-400 hover:text-cyan-400 transition-colors">
                     Education
                   </button>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Connect</h4>
+              <h4 className="font-semibold mb-4 text-white">Connect</h4>
               <p className="text-gray-400 mb-2">Email: masfiqur.nehal509@gmail.com</p>
               <div className="flex gap-4 mt-4">
-                <a href="https://www.linkedin.com/in/masfiqur-nehal/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/in/masfiqur-nehal/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
                   LinkedIn
                 </a>
-                <a href="https://github.com/MasfiqurNehal" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://github.com/MasfiqurNehal" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
                   GitHub
                 </a>
               </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-500">
             <p>© 2026 Md. Masfiqur Rahman Nehal. All rights reserved.</p>
           </div>
         </div>
