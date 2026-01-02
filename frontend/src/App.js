@@ -592,15 +592,34 @@ function App() {
             {research.map((item, index) => (
               <article 
                 key={index}
-                className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-8 shadow-lg border border-purple-500/30 hover:border-purple-400/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all"
+                className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-8 shadow-lg border border-purple-500/30 hover:border-purple-400/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all group"
                 data-testid={`research-item-${index}`}
               >
-                <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
-                <div className="flex items-center gap-4 text-sm">
+                {item.link ? (
+                  <a 
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">
+                      {item.title}
+                      <svg className="inline-block w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </h3>
+                  </a>
+                ) : (
+                  <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                )}
+                <div className="flex items-center gap-4 text-sm flex-wrap">
                   <span className="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full font-medium border border-purple-500/30">
                     {item.type}
                   </span>
                   <span className="text-gray-400">{item.platform}</span>
+                  {item.link && (
+                    <span className="text-cyan-400 text-xs">Click to view publication →</span>
+                  )}
                 </div>
               </article>
             ))}
