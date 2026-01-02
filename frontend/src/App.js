@@ -314,10 +314,25 @@ function App() {
 
       {/* Hero Section */}
       <header id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden">
-        {/* Animated background elements */}
+        {/* Enhanced animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
+          {/* Gradient orbs */}
           <div className="absolute w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
           <div className="absolute w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -bottom-48 -right-48 animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute w-72 h-72 bg-purple-500/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{animationDelay: '2s'}}></div>
+          
+          {/* Tech grid pattern */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent"></div>
+          
+          {/* Floating particles */}
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
+          <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping" style={{animationDelay: '1.5s'}}></div>
+          <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '2.5s'}}></div>
+          
+          {/* Scanning line effect */}
+          <div className="absolute inset-0">
+            <div className="absolute w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent top-1/4 animate-scan"></div>
+          </div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -327,9 +342,10 @@ function App() {
                 <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
                 Available for Work
               </div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight" data-testid="hero-name">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight min-h-[120px]" data-testid="hero-name">
                 <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent">
-                  Md. Masfiqur Rahman Nehal
+                  {displayedName}
+                  <span className="animate-pulse">|</span>
                 </span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light" data-testid="hero-title">
@@ -364,26 +380,39 @@ function App() {
               </div>
             </div>
             <div className="flex-shrink-0">
-              <div className="relative">
-                {/* Outer glow ring */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+              <div className="relative group">
+                {/* Outer glow ring with stronger animation */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
                 
-                {/* Middle gradient ring */}
-                <div className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-blue-500 via-cyan-500 to-purple-600 p-1.5 shadow-2xl">
-                  {/* Inner white ring */}
+                {/* Rotating gradient ring */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-600 rounded-full animate-spin-slow opacity-30 blur-xl"></div>
+                
+                {/* Middle gradient ring - enhanced */}
+                <div className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-blue-500 via-cyan-500 to-purple-600 p-2 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105">
+                  {/* Inner dark ring */}
                   <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-800 to-gray-900 p-2">
-                    {/* Profile image */}
+                    {/* Enhanced profile image with filters */}
                     <img 
                       src="https://customer-assets.emergentagent.com/job_hii-hello-62/artifacts/3h91qb9z_profile.png" 
                       alt="Md. Masfiqur Rahman Nehal - Software Engineer"
-                      className="w-full h-full rounded-full object-cover shadow-2xl ring-4 ring-cyan-500/30"
+                      className="w-full h-full rounded-full object-cover shadow-2xl ring-4 ring-cyan-500/40 hover:ring-cyan-400/60 transition-all duration-300"
+                      style={{
+                        filter: 'contrast(1.1) brightness(1.05) saturate(1.1) sharpen(1)',
+                        imageRendering: 'crisp-edges'
+                      }}
                       data-testid="profile-image"
                     />
                   </div>
                 </div>
                 
-                {/* Bottom shadow for depth */}
-                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-3/4 h-8 bg-blue-500/20 blur-2xl rounded-full"></div>
+                {/* Enhanced bottom shadow for depth */}
+                <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-3/4 h-10 bg-gradient-to-b from-blue-500/30 to-transparent blur-2xl rounded-full"></div>
+                
+                {/* Tech corner accents */}
+                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-cyan-400/50"></div>
+                <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-cyan-400/50"></div>
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-purple-400/50"></div>
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-purple-400/50"></div>
               </div>
             </div>
           </div>
