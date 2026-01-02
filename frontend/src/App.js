@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
 import "@/App.css";
-import axios from "axios";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -15,7 +11,6 @@ function App() {
     comment: ''
   });
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [displayedName, setDisplayedName] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -106,27 +101,38 @@ function App() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  // Handle form submission (frontend only - opens email client)
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setFormStatus({ type: '', message: '' });
+    
+    // Create mailto link with form data
+    const subject = `Portfolio Contact from ${formData.name}`;
+    const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+Address: ${formData.address || 'Not provided'}
 
-    try {
-      const response = await axios.post(`${API}/contact`, formData);
-      setFormStatus({ 
-        type: 'success', 
-        message: 'Thank you for your message! I will get back to you soon.' 
-      });
+Message:
+${formData.comment}
+    `;
+    
+    const mailtoLink = `mailto:masfiqur.nehal509@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    setFormStatus({ 
+      type: 'success', 
+      message: 'Opening your email client... Please send the email to complete your message.' 
+    });
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
       setFormData({ name: '', email: '', phone: '', address: '', comment: '' });
-    } catch (error) {
-      setFormStatus({ 
-        type: 'error', 
-        message: 'Failed to send message. Please email me directly at masfiqur.nehal509@gmail.com' 
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+      setFormStatus({ type: '', message: '' });
+    }, 3000);
   };
 
   const projects = [
@@ -859,11 +865,10 @@ function App() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-blue-500 hover:to-cyan-500 transition-all disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transform"
+                className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transform"
                 data-testid="contact-submit-button"
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                Send via Email
               </button>
             </form>
           </div>
