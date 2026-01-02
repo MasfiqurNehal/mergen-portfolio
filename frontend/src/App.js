@@ -232,10 +232,10 @@ function App() {
           <div className="flex justify-between items-center h-16">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-cyan-300 transition-all"
+              className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-cyan-300 transition-all"
               data-testid="nav-logo"
             >
-              Nehal
+              Md. Masfiqur Rahman Nehal
             </button>
             <div className="hidden md:flex space-x-8">
               {['home', 'projects', 'skills', 'education', 'research', 'about', 'contact'].map(section => (
@@ -310,13 +310,25 @@ function App() {
             </div>
             <div className="flex-shrink-0">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl blur-2xl opacity-30 animate-pulse"></div>
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_hii-hello-62/artifacts/3h91qb9z_profile.png" 
-                  alt="Md. Masfiqur Rahman Nehal - Software Engineer"
-                  className="relative w-72 h-72 md:w-96 md:h-96 rounded-2xl shadow-2xl object-cover border-4 border-white/10"
-                  data-testid="profile-image"
-                />
+                {/* Outer glow ring */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+                
+                {/* Middle gradient ring */}
+                <div className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-blue-500 via-cyan-500 to-purple-600 p-1.5 shadow-2xl">
+                  {/* Inner white ring */}
+                  <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-800 to-gray-900 p-2">
+                    {/* Profile image */}
+                    <img 
+                      src="https://customer-assets.emergentagent.com/job_hii-hello-62/artifacts/3h91qb9z_profile.png" 
+                      alt="Md. Masfiqur Rahman Nehal - Software Engineer"
+                      className="w-full h-full rounded-full object-cover shadow-2xl ring-4 ring-cyan-500/30"
+                      data-testid="profile-image"
+                    />
+                  </div>
+                </div>
+                
+                {/* Bottom shadow for depth */}
+                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-3/4 h-8 bg-blue-500/20 blur-2xl rounded-full"></div>
               </div>
             </div>
           </div>
