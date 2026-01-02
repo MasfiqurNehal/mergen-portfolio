@@ -9,6 +9,9 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 import uuid
 from datetime import datetime, timezone
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 ROOT_DIR = Path(__file__).parent
@@ -76,14 +79,7 @@ async def get_status_checks():
 @api_router.post("/contact")
 async def contact_form(form_data: ContactForm):
     """
-    Contact form endpoint - stores message in database
-    
-    Note: To enable email sending, you need to configure an email service:
-    - Option 1: Add SMTP credentials to .env (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD)
-    - Option 2: Use SendGrid API (add SENDGRID_API_KEY to .env)
-    - Option 3: Use AWS SES (configure AWS credentials)
-    
-    For now, messages are stored in MongoDB.
+    Contact form endpoint - stores message in database and sends email
     """
     try:
         # Store contact message in database
@@ -102,11 +98,82 @@ async def contact_form(form_data: ContactForm):
         
         logger.info(f"New contact message from {form_data.name} ({form_data.email})")
         
-        # TODO: Implement email sending here when email service is configured
-        # Example with SMTP:
-        # import smtplib
-        # from email.mime.text import MIMEText
-        # send_email(to="nehal@masfiqurnehal.com", subject=f"Contact from {form_data.name}", body=form_data.comment)
+        # Send email notification
+        try:
+            # Create email message
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = f"Portfolio Contact: Message from {form_data.name}"
+            msg['From'] = "portfolio@masfiqurnehal.com"
+            msg['To'] = "nehal@masfiqurnehal.com"
+            
+            # HTML email body
+            html_body = f"""
+            <html>
+              <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px;">
+                  <h2 style="color: #2563eb; border-bottom: 2px solid #06b6d4; padding-bottom: 10px;">New Portfolio Contact Message</h2>
+                  
+                  <div style="background-color: white; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                    <p><strong style="color: #2563eb;">From:</strong> {form_data.name}</p>
+                    <p><strong style="color: #2563eb;">Email:</strong> <a href="mailto:{form_data.email}">{form_data.email}</a></p>
+                    <p><strong style="color: #2563eb;">Phone:</strong> {form_data.phone if form_data.phone else 'Not provided'}</p>
+                    <p><strong style="color: #2563eb;">Location:</strong> {form_data.address if form_data.address else 'Not provided'}</p>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background-color: #f0f9ff; border-left: 4px solid #06b6d4; border-radius: 4px;">
+                      <p style="margin: 0;"><strong style="color: #2563eb;">Message:</strong></p>
+                      <p style="margin-top: 10px; white-space: pre-wrap;">{form_data.comment}</p>
+                    </div>
+                  </div>
+                  
+                  <p style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
+                    Sent from your portfolio website at {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
+                  </p>
+                </div>
+              </body>
+            </html>
+            """
+            
+            # Plain text alternative
+            text_body = f"""
+New Portfolio Contact Message
+============================
+
+From: {form_data.name}
+Email: {form_data.email}
+Phone: {form_data.phone if form_data.phone else 'Not provided'}
+Location: {form_data.address if form_data.address else 'Not provided'}
+
+Message:
+{form_data.comment}
+
+---
+Sent from your portfolio website at {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
+            """
+            
+            part1 = MIMEText(text_body, 'plain')
+            part2 = MIMEText(html_body, 'html')
+            msg.attach(part1)
+            msg.attach(part2)
+            
+            # Get SMTP settings from environment or use defaults
+            smtp_host = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
+            smtp_port = int(os.environ.get('SMTP_PORT', '587'))
+            smtp_user = os.environ.get('SMTP_USER', '')
+            smtp_password = os.environ.get('SMTP_PASSWORD', '')
+            
+            # Only attempt to send if SMTP credentials are configured
+            if smtp_user and smtp_password:
+                with smtplib.SMTP(smtp_host, smtp_port) as server:
+                    server.starttls()
+                    server.login(smtp_user, smtp_password)
+                    server.send_message(msg)
+                logger.info(f"Email sent successfully to nehal@masfiqurnehal.com")
+            else:
+                logger.warning("SMTP credentials not configured. Email not sent. Message saved to database.")
+        
+        except Exception as email_error:
+            logger.error(f"Failed to send email: {str(email_error)}")
+            # Continue even if email fails - message is still in database
         
         return {
             "success": True,
